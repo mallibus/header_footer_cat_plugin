@@ -1,6 +1,6 @@
 # Cheshire Cat plugin to remove headers and footers ingesting documents
 
-This plugin helps in the ingestion og documents with repetitive headers and footers, like usually are corporate documents, managing fuzzy matching to allow for small differences (e.g. page numbers)
+This plugin helps in the ingestion of documents with repetitive headers and footers, like usually are corporate documents, managing fuzzy matching to allow for small differences (e.g. page numbers)
 
 ### Settings
 
