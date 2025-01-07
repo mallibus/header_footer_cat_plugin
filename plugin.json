@@ -1,6 +1,6 @@
 {
     "name": "Header And Footer Cutter Cat Plugin",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Strip headers and footers while ingesting documents, using fuzzy matching to avoid been fooled by page numbers",
     "author_name": "Mallibus",
     "author_url": "https://www.linkedin.com/in/marcello-morchio-4a9b967/",
