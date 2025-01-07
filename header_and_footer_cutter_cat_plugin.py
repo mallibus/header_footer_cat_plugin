@@ -129,7 +129,7 @@ def get_frequent_sequences(counts : dict, min_count_threshold=2):
     return frequent_sequences
 
 
-def remove_sequence_from_documents(documents : List[Document], sequence : str, max_differences=3):
+def remove_sequence_from_documents(documents : List[Document], sequence : str, max_differences=3, cat = None):
   """
   Removes the given sequence from the beginning or end of the text 
   in each Document object using fuzzy matching.
@@ -163,14 +163,23 @@ def remove_sequence_from_documents(documents : List[Document], sequence : str, m
     cleaned_documents.append(Document(page_content=text, metadata=doc.metadata))
 
   if count_clean_head > 0 :
-      log.info(f'removed {count_clean_head} headers strings {sequence}')
+      message = f"removed {count_clean_head} headers strings {sequence}"
+      log.info(message)
+      cat.send_ws_message(message, msg_type="notification")
   if count_clean_tail > 0 :    
-      log.info(f'removed {count_clean_tail} footers strings {sequence}')
+      message = f"removed {count_clean_tail} footers strings {sequence}"
+      log.info(message)
+      cat.send_ws_message(message, msg_type="notification")
+
   
   return cleaned_documents
 
 
-def remove_headers_and_footers(docs:List[Document], max_lines:int, repeat_threshold:float, max_differences:int ) -> List[Document]:
+def remove_headers_and_footers(docs:List[Document], 
+                               max_lines:int, 
+                               repeat_threshold:float, 
+                               max_differences:int, 
+                               cat ) -> List[Document]:
     """
       Removes common headers and footers from a list of Document objects.
 
@@ -205,7 +214,7 @@ def remove_headers_and_footers(docs:List[Document], max_lines:int, repeat_thresh
     
     docs_update = deepcopy(docs)
     for sequence in headers + footers:
-        docs_update = remove_sequence_from_documents(docs_update,sequence['sequence'])
+        docs_update = remove_sequence_from_documents(docs_update,sequence['sequence'], cat=cat)
 
     return docs_update
 
@@ -232,7 +241,7 @@ def before_rabbithole_splits_text(docs: List[Document], cat) -> List[Document]:
     max_lines = settings["max_lines"]
     repeat_threshold = settings["repeat_threshold"]
     max_differences = settings["max_differences"]
-    docs_updated = remove_headers_and_footers(docs, max_lines, repeat_threshold, max_differences)
+    docs_updated = remove_headers_and_footers(docs, max_lines, repeat_threshold, max_differences, cat)
 
     if settings["debug_mode"]:
        write_documents_to_text_file(docs_updated, Path(tmp_files_path)/"docs_updated.txt")
