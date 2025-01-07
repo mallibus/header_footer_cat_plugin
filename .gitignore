@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# ignore tmp files genrated for debugging
+tmp/
+
 # C extensions
 *.so
 

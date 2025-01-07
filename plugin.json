@@ -1,10 +1,10 @@
 {
-    "name": "My plugin",
+    "name": "Header And Footer Cutter Cat Plugin",
     "version": "0.0.1",
-    "description": "Description of my_plugin.",
-    "author_name": "Me",
-    "author_url": "https://mywebsite.me",
-    "plugin_url": "https://github.com/my_name/my_plugin",
-    "tags": "cat, template, example",
-    "thumb": "https://raw.githubusercontent.com/my_repo_path/my_plugin.png"
+    "description": "Strip headers and footers while ingesting documents, using fuzzy matching to avoid been fooled by page numbers",
+    "author_name": "Mallibus",
+    "author_url": "https://www.linkedin.com/in/marcello-morchio-4a9b967/",
+    "plugin_url": "https://github.com/mallibus/header_and_footer_cutter_cat_plugin",
+    "tags": "cat, ingestion, documents, header, footer, pdf",
+    "thumb": "https://raw.githubusercontent.com/mallibus/header_and_footer_cutter_cat_plugin/logo.png"
 }

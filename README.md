@@ -1,26 +1,28 @@
-# My plugin
+# Cheshire Cat plugin to remove headers and footers ingesting documents
 
-[![awesome plugin](https://custom-icon-badges.demolab.com/static/v1?label=&message=awesome+plugin&color=383938&style=for-the-badge&logo=cheshire_cat_ai)](https://)  
-[![Awesome plugin](https://custom-icon-badges.demolab.com/static/v1?label=&message=Awesome+plugin&color=000000&style=for-the-badge&logo=cheshire_cat_ai)](https://)  
-[![awesome plugin](https://custom-icon-badges.demolab.com/static/v1?label=&message=awesome+plugin&color=F4F4F5&style=for-the-badge&logo=cheshire_cat_black)](https://)
+This plugin helps in the ingestion og documents with repetitive headers and footers, like usually are corporate documents, managing fuzzy matching to allow for small differences (e.g. page numbers)
 
-Write here all the useful information about your plugin.
+### Settings
 
-This repository is the template to automate the release of official Cheshire Cat AI plugins. 
+- **max_lines**: `int`
+    - Maximum number of lines to look at for header/footer detection.
 
-## Usage
+- **repeat_threshold**: `float (0-1)`
+    - Minimum proportion of documents that a header/footer sequence must appear in to be considered. For example, 50% means that a sequence of lines is probably a header or footer if it is present in at least half of the pages of the document.
 
-1. Create a new repository clicking on the `Use this template` button.
-2. Clone your new repo directly in the Cat's `plugins` folder.
-3. Run the `setup.py` script:
-```bash
-python setup.py
-```
-The script will prompt you to write the name of your plugin and make an initial setup setting the name in the files.
+- **max_differences**: `int`
+    - Maximum number of character differences allowed for a fuzzy match. (3 is okay for documents below 1000 pages.)
 
-4. Start developing!
+- **pdf_parser**: `PDFMinerParser | PDFPlumberParser`
+    - Parser for PDF files.
+        - `PDFMinerParser`: Default for the Cheshire Cat, usually good and especially good for arXiv papers with two columns per page.
+        - `PDFPlumberParser`: Good for linear documents with tables - table rows are preserved as paragraphs.
 
-> **Important**
-> A new release of your plugin is triggered every time you set a new `version` in the `plugin.json` file.
-> Please, remember to set it correctly every time you want to release an update.
+- **debug_mode**: `bool`
+    - When true, some files are stored in the plugin folder:
+        - `docs.txt`: The LangChain Document list generated after document parsing.
+        - `docs.pkl`: The serialized version of the Document list, used for experimenting with LangChain.
+        - `docs_updated.txt`: The updated Document list with headers/footers removed.
+        - `chunks`: The Document list generated after document split.
 
+![Header Footer Cutting Cat](logo.png)
